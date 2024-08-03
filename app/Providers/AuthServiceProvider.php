@@ -9,6 +9,8 @@ use App\Http\Interfaces\CartInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Repostries\ProductRepostry;
 use App\Http\Interfaces\ProductInterface;
+use App\Http\Repostries\CheckoutRepostry;
+use App\Http\Interfaces\CheckoutInterface;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->app->bind(AuthInterface::class, AuthRepostry::class);
         $this->app->bind(ProductInterface::class, ProductRepostry::class);
         $this->app->bind(CartInterface::class, CartRepostry::class);
+        $this->app->bind(CheckoutInterface::class, CheckoutRepostry::class);
 
     }
 
