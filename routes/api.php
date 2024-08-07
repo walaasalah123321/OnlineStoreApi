@@ -14,6 +14,12 @@ use App\Http\Controllers\ProductController;
 Route::post("register",[AuthController::class,"Register"]);
 Route::post("login",[AuthController::class,"Login"]);
 Route::get("products",[ProductController::class,"Product"]);
+Route::group(["middleware"=>"JwTAuth"],function(){
+    Route::post("/logout",[AuthController::class,"logout"]);
+    Route::post("/refresh",[AuthController::class,"refresh"]);
+
+
+});
 Route::group(["prefix"=>"Cart","middleware"=>"JwTAuth"],function(){
 Route::post("/Add",[CartController::class,"store"]);
 Route::get("/All User Cart",[CartController::class,"index"]);

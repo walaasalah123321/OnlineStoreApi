@@ -7,6 +7,7 @@ use App\Http\Trait\ApiResponse;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Interfaces\AuthInterface;
 use Illuminate\Support\Facades\Validator;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthRepostry implements AuthInterface{
     use ApiResponse;
@@ -48,6 +49,19 @@ class AuthRepostry implements AuthInterface{
             
         }
     }
+    public function logout($request){
+        JWTAuth::invalidate($request->token);
+        return $this->ApiResponse("200","logout successfully");
+        
+    }
+    public function refresh($request){
+      $user=  JWTAuth::refresh($request->token);
+      if(!$user){
+        return $this->ApiResponse(200,"errer of refresh token ");
+      }
+      return $this->ApiResponse(200,"refresh sucessfully",null,$user);
+        
+    }
     protected function WithToken($token){
         $array=[
             "access_token"=>$token,
@@ -56,4 +70,5 @@ class AuthRepostry implements AuthInterface{
         return $this->ApiResponse(200,"successfully login ",null,$array);
  
     }
+   
 }
